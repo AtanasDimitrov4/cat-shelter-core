@@ -1,0 +1,12 @@
+{
+  "name": "cat-shelter-core",
+  "version": "1.0.0",
+  "description": "raw coding on cat shelter task",
+  "main": "server.js",
+  "scripts": {
+   "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "type": "module"
+}

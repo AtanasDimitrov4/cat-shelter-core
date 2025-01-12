@@ -1,0 +1,43 @@
+[
+  {
+    "id": "1b057c5d-bff8-4d00-867f-5a68e790419b",
+    " imageUrl": "https://ichef.bbci.co.uk/news/976/cpsprodpb/12A9B/production/_111434467_gettyimages-1143489763.jpg",
+    "name": "Ramses",
+    "breed": " Bombay Cat",
+    "description": "Dominant and aggressive to other cats. Will probably eat you in your sleep. Very cute tho."
+  },
+  {
+    "id": "2m057c5d-bff8-4d00-867f-5a68e790410z",
+    "imageUrl": "https://cdn.pixabay.com/photo/2015/06/19/14/20/cat-814952_1280.jpg",
+    "name": " Skaar",
+    "breed": "Bombay Cat",
+    "description": "Dominant and aggressive to other cats. Will probably eat you in your sleep. Very cute tho."
+  },
+  {
+    "id": "3q057c5d-bff8-4d00-867f-5a68e790419x",
+    "imageUrl": "https://cdn.pixabay.com/photo/2018/08/08/05/12/cat-3591348_1280.jpg",
+    "name": "Snowly",
+    " breed": "Bombay Cat",
+    " description": "Dominant and aggressive to other cats. Will probably eat you in your sleep. Very cute tho."
+  },
+  {
+    "id": "4w057c5d-bff8-4d00-867f-5a68e790418c",
+    " imageUrl": "https://cdn.pixabay.com/photo/2017/02/20/18/03/cat-2083492_1280.jpg",
+    "name": "Cutie",
+    "breed": "Bombay Cat",
+    "description": "Dominant and aggressive to other cats. Will probably eat you in your sleep. Very cute tho."
+  },
+  {
+    " id": "5r057c5d-bff8-4d00-867f-5a68e790416v",
+    "imageUrl": "https://cdn.pixabay.com/photo/2014/04/13/20/49/cat-323262_1280.jpg",
+    "name": "Ginger",
+    " breed": "Bombay Cat",
+    "description": "Dominant and aggressive to other cats. Will probably eat you in your sleep. Very cute tho."
+  },
+  {
+    "name": "Kleopatra",
+    "description": "Evil Cat",
+    "upload": "https://snworksceo.imgix.net/ufa/01813891-c850-4172-bcce-2a701f59e063.sized-1000x1000.jpg?w=800&dpr=2&ar=16%3A9&fit=crop&crop=faces",
+    "breed": "Persian cat"
+  }
+]

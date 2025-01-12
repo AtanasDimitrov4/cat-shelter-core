@@ -1,75 +1,102 @@
-import http from 'http';
+import http from "http";
+import fs from "fs/promises";
+import { indexHtml } from "./views/home/index.html.js";
+import { addCat } from "./views/addCat.html.js";
+import { addBreed } from "./views/addBreed.html.js";
+import { siteCss } from "./content/images/styles/site.css.js";
 
-import homePage from './views/home/index.html.js';
-import siteCss from './content/images/styles/site.css.js';
-import addBreadPage from './views/addBreed.html.js';
-import addCatPage from './views/addCat.html.js';
+let cats = [];
+let breeds = [];
 
-const cats = [
-   {
-      id: 1,
-      imageUrl:'https://ichef.bbci.co.uk/news/976/cpsprodpb/12A9B/production/_111434467_gettyimages-1143489763.jpg',
-      breed: 'Bombay Cat',
-      description:'Dominant and aggressive to other cats. Will probably eat you in your sleep. Very cute tho.',
-   },
-   {
-      id: 2,
-      imageUrl:'https://cdn.pixabay.com/photo/2015/06/19/14/20/cat-814952_1280.jpg',
-      breed: 'Bombay Cat',
-      description:'Dominant and aggressive to other cats. Will probably eat you in your sleep. Very cute tho.',
-   },
-   {
-      id: 3,
-      imageUrl:'https://cdn.pixabay.com/photo/2018/08/08/05/12/cat-3591348_1280.jpg',
-      breed: 'Bombay Cat',
-      description:'Dominant and aggressive to other cats. Will probably eat you in your sleep. Very cute tho.',
-   },
-   {
-      id: 4,
-      imageUrl:'https://cdn.pixabay.com/photo/2017/02/20/18/03/cat-2083492_1280.jpg',
-      breed: 'Bombay Cat',
-      description:'Dominant and aggressive to other cats. Will probably eat you in your sleep. Very cute tho.',
-   },
-   {
-      id: 5,
-      imageUrl:'https://cdn.pixabay.com/photo/2014/04/13/20/49/cat-323262_1280.jpg',
-      breed: 'Bombay Cat',
-      description:'Dominant and aggressive to other cats. Will probably eat you in your sleep. Very cute tho.',
-   },
-]
+initCats();
+loadBreeds();
 
 const server = http.createServer((req, res) => {
-   if (req.url === '/styles/site.css') {
-      res.writeHead(200, {
-         'content-type': 'text/css',
+  if (req.method === "POST") {
+    let body = "";
+
+    req.on("data", (chunk) => (body += chunk.toString()));
+
+    req.on("end", () => {
+      const data = new URLSearchParams(body);
+
+      if (req.url === "/cats/add-cat") {
+        cats.push({
+          ...Object.fromEntries(data.entries()),
+        });
+
+        updateCats();
+      } else if (req.url === "/cats/add-breed") {
+        const breed = data.get("breed");
+
+        if (breed) {
+          breeds.push(breed);
+          updateBreeds();
+        }
+      }
+
+      res.writeHead(301, {
+        location: "/",
       });
 
-      res.write(siteCss);
-      return res.end();
-   }
-   res.writeHead(200, {
-      'content-type': 'text/html',
-   });
+      res.end();
+    });
 
-   switch(req.url) {
-      case '/':
-         res.write(homePage);
-         break;
-      case '/cats/add-breed':
-         res.write(addBreadPage);
-         break;
-      case '/cats/add-cat':
-         res.write(addCatPage);
-         break;      
-      default:
-         res.write('Page not found!')
-         break;   
-   }
+    return;
+  }
 
- 
+  // Applying css
+  if (req.url === "/styles/site.css") {
+    res.writeHead(200, {
+      "content-type": "text/css",
+    }),
+      res.write(siteCss());
 
-   res.end();
+    return res.end();
+  }
+
+  res.writeHead(200, {
+    "content-type": "text/html",
+  });
+
+  // Custom routing
+  switch (req.url) {
+    case "/":
+      res.write(indexHtml(cats));
+      break;
+    case "/cats/add-cat":
+      res.write(addCat(breeds));
+      break;
+    case "/cats/add-breed":
+      res.write(addBreed());
+      break;
+    default:
+      res.write("Page not found");
+      break;
+  }
+
+  res.end();
 });
 
+async function initCats() {
+  let catsJSON = await fs.readFile("./cats.json", { encoding: "utf-8" });
+  cats = JSON.parse(catsJSON);
+}
+
+async function updateCats() {
+  let catsJSON = JSON.stringify(cats, null, 2);
+  await fs.writeFile("./cats.json", catsJSON, { encoding: "utf-8" });
+}
+
+async function loadBreeds() {
+  let breedsJSON = await fs.readFile("./breeds.json", { encoding: "utf-8" });
+  breeds = JSON.parse(breedsJSON);
+}
+
+async function updateBreeds() {
+  let breedsJSON = JSON.stringify(breeds, null, 2);
+  await fs.writeFile("./breeds.json", breedsJSON, { encoding: "utf-8" });
+}
+
 server.listen(5000);
-console.log('Server is listening on http://localhost:5000..')
+console.log("server listens on port: 5000");
